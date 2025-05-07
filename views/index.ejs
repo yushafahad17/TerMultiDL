@@ -6,7 +6,7 @@
   <title>TerMultiDL | Sosmed Downloader</title>
   
   <!-- Menambahkan Favicon -->
-  <link rel="icon" href="https://i.supa.codes/57XKKi" type="image/png">
+  <link rel="icon" href="https://i.supa.codes/awRsyy" type="image/png">
   
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -34,18 +34,14 @@
         const res = await fetch(`/download?url=${encodeURIComponent(url)}&format=${type}`);
         const data = await res.json();
         if (data.success) {
-          const cleanFileName = (data.title || 'file').replace(/[^a-z0-9_\-\.]/gi, '_');
-resultDiv.innerHTML = `
-  <div class="flex items-center justify-center gap-4">
-    <img src="${data.thumbnail}" alt="${data.title}" class="w-20 h-20 object-cover rounded-lg border-2 border-gray-300 dark:border-gray-600 shadow-lg"/>
-    <div>
-      <p class="font-semibold">${data.title}</p>
-      <a href="${data.link}" download="${cleanFileName}.${type}" target="_blank" class="text-green-500 font-semibold underline">
-        ✅ Klik di sini untuk mengunduh ${type.toUpperCase()}
-      </a>
-    </div>
-  </div>`;
-
+          resultDiv.innerHTML = `
+            <div class="flex items-center justify-center gap-4">
+              <img src="${data.thumbnail}" alt="${data.title}" class="w-20 h-20 object-cover rounded-lg border-2 border-gray-300 dark:border-gray-600 shadow-lg"/>
+              <div>
+                <p class="font-semibold">${data.title}</p>
+                <a href="${data.link}" target="_blank" class="text-green-500 font-semibold underline">✅ Klik di sini untuk mengunduh ${type.toUpperCase()}</a>
+              </div>
+            </div>`;
         } else {
           resultDiv.innerHTML = `<span class="text-red-500">❌ Gagal mengambil link unduhan.</span>`;
         }
@@ -113,7 +109,7 @@ resultDiv.innerHTML = `
           <i class="fas fa-bolt text-red-500 text-3xl"></i>
           <div>
             <h3 class="font-semibold text-lg">Unduhan dengan cepat</h3>
-            <p class="text-sm text-gray-700 dark:text-gray-300">TerMultiDL menawarkan pengalaman pengunduhan video Sosmed,TikTok,Instagram,Facebook,Twitter,Capcut,Spotify yang cepat. Tugas diselesaikan dalam hitungan detik, memberi Anda unduhan berkecepatan tinggi.</p>
+            <p class="text-sm text-gray-700 dark:text-gray-300">TerMultiDL menawarkan pengalaman pengunduhan video YouTube,TikTok,Instagram,Facebook,Twitter,Capcut,Spotify yang cepat. Tugas diselesaikan dalam hitungan detik, memberi Anda unduhan berkecepatan tinggi.</p>
           </div>
         </div>
 
@@ -129,7 +125,7 @@ resultDiv.innerHTML = `
           <i class="fas fa-desktop text-indigo-500 text-3xl"></i>
           <div>
             <h3 class="font-semibold text-lg">Kompatibilitas lintas platform</h3>
-            <p class="text-sm text-gray-700 dark:text-gray-300">Unduh video Sosmed,TikTok,Instagram,Facebook,Twitter,Capcut secara instan di seluruh perangkat Mac, Android, dan Windows melalui browser web apa pun (Chrome/Safari) tanpa diperlukan instalasi klien.</p>
+            <p class="text-sm text-gray-700 dark:text-gray-300">Unduh video YouTube,TikTok,Instagram,Facebook,Twitter,Capcut secara instan di seluruh perangkat Mac, Android, dan Windows melalui browser web apa pun (Chrome/Safari) tanpa diperlukan instalasi klien.</p>
           </div>
         </div>
 
