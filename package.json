@@ -1,5 +1,5 @@
 {
-  "name": "TerYTDL",
+  "name": "TerMultiDL",
   "version": "1.0.0",
   "main": "api/index.js",
   "scripts": {
