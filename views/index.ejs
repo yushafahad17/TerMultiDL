@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TerMultiDL | Sosmed Downloader</title>
+  
+  <!-- Menambahkan Favicon -->
+  <link rel="icon" href="https://i.supa.codes/57XKKi" type="image/png">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <script>
+    async function pasteClipboard() {
+      try {
+        const text = await navigator.clipboard.readText();
+        document.getElementById('url').value = text;
+      } catch (err) {
+        alert("Gagal menempelkan URL. Pastikan Anda sudah menyalin link.");
+      }
+    }
+
+    async function download(type) {
+      const url = document.getElementById('url').value.trim();
+      const resultDiv = document.getElementById('result');
+      if (!url) {
+        resultDiv.innerHTML = `<span class="text-red-500">🚫 Silakan masukkan URL.</span>`;
+        return;
+      }
+
+      resultDiv.innerHTML = `<span class="text-blue-500 animate-pulse">⏳ Sedang memproses...</span>`;
+      try {
+        const res = await fetch(`/download?url=${encodeURIComponent(url)}&format=${type}`);
+        const data = await res.json();
+        if (data.success) {
+          const cleanFileName = (data.title || 'file').replace(/[^a-z0-9_\-\.]/gi, '_');
+resultDiv.innerHTML = `
+  <div class="flex items-center justify-center gap-4">
+    <img src="${data.thumbnail}" alt="${data.title}" class="w-20 h-20 object-cover rounded-lg border-2 border-gray-300 dark:border-gray-600 shadow-lg"/>
+    <div>
+      <p class="font-semibold">${data.title}</p>
+      <a href="${data.link}" download="${cleanFileName}.${type}" target="_blank" class="text-green-500 font-semibold underline">
+        ✅ Klik di sini untuk mengunduh ${type.toUpperCase()}
+      </a>
+    </div>
+  </div>`;
+
+        } else {
+          resultDiv.innerHTML = `<span class="text-red-500">❌ Gagal mengambil link unduhan.</span>`;
+        }
+      } catch (err) {
+        resultDiv.innerHTML = `<span class="text-red-500">⚠️ Terjadi kesalahan pada koneksi atau server.</span>`;
+      }
+    }
+  </script>
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-all duration-300 min-h-screen flex flex-col">
+
+  <header class="w-full bg-gray-100 dark:bg-gray-800 shadow-md p-4 flex justify-between items-center">
+    <h1 class="text-2xl font-extrabold">🎵 Sosmed Downloader | TerMultiDL</h1>
+  </header>
+
+  <main class="flex-grow flex flex-col items-center justify-center px-4 py-10">
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-2xl w-full max-w-2xl transition-all duration-300">
+      <h2 class="text-xl font-semibold mb-6 text-center">Download Video / Audio dari Sosmed</h2>
+
+      <div class="flex items-center gap-4 mb-6">
+        <input id="url" type="text" placeholder="Tempelkan URL Sosmed di sini..."
+               class="w-full p-4 rounded-lg border border-gray-300 dark:border-gray-700 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
+        <button onclick="pasteClipboard()" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-500 transition">
+          <img src="https://i.supa.codes/03OPef" alt="Paste Link" class="w-6 h-6"/>
+        </button>
+      </div>
+
+      <div class="flex justify-center gap-4 mb-4">
+        <button onclick="download('mp4')" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition shadow-md">
+          <i class="fas fa-video"></i> Video
+        </button>
+        <button onclick="download('mp3')" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium transition shadow-md">
+          <i class="fas fa-music"></i> Audio
+        </button>
+      </div>
+
+      <div id="result" class="text-center text-sm mt-6 min-h-[30px]"></div>
+
+      <section class="space-y-8 mt-10">
+        <div class="flex items-start gap-4">
+          <i class="fas fa-cogs text-blue-500 text-3xl"></i>
+          <div>
+            <h3 class="font-semibold text-lg">Fleksibilitas dalam format</h3>
+            <p class="text-sm text-gray-700 dark:text-gray-300">Unduh video Sosmed ke MP3, MP4</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <i class="fas fa-trophy text-yellow-500 text-3xl"></i>
+          <div>
+            <h3 class="font-semibold text-lg">Opsi berkualitas tinggi</h3>
+            <p class="text-sm text-gray-700 dark:text-gray-300">Unduh video Sosmed dalam kualitas terbaik</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <i class="fas fa-gift text-green-500 text-3xl"></i>
+          <div>
+            <h3 class="font-semibold text-lg">Benar-benar gratis</h3>
+            <p class="text-sm text-gray-700 dark:text-gray-300">Nikmati Video Sosmed Tanpa Batas dan Unduhan Sosmed tanpa menghabiskan uang/gratis. TerMultiDL berkomitmen untuk menyediakan layanan unduhan yang aman dan bebas biaya untuk semua pengguna.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <i class="fas fa-bolt text-red-500 text-3xl"></i>
+          <div>
+            <h3 class="font-semibold text-lg">Unduhan dengan cepat</h3>
+            <p class="text-sm text-gray-700 dark:text-gray-300">TerMultiDL menawarkan pengalaman pengunduhan video Sosmed,TikTok,Instagram,Facebook,Twitter,Capcut,Spotify yang cepat. Tugas diselesaikan dalam hitungan detik, memberi Anda unduhan berkecepatan tinggi.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <i class="fas fa-user-slash text-purple-500 text-3xl"></i>
+          <div>
+            <h3 class="font-semibold text-lg">Tidak diperlukan pendaftaran</h3>
+            <p class="text-sm text-gray-700 dark:text-gray-300">Pengunduh Sosmed yang aman kami memastikan bahwa kemudahan akses dan privasi Anda adalah prioritas utama kami. Tidak diperlukan login, dan kami tidak menyimpan informasi pribadi Anda.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <i class="fas fa-desktop text-indigo-500 text-3xl"></i>
+          <div>
+            <h3 class="font-semibold text-lg">Kompatibilitas lintas platform</h3>
+            <p class="text-sm text-gray-700 dark:text-gray-300">Unduh video Sosmed,TikTok,Instagram,Facebook,Twitter,Capcut secara instan di seluruh perangkat Mac, Android, dan Windows melalui browser web apa pun (Chrome/Safari) tanpa diperlukan instalasi klien.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <i class="fas fa-star text-orange-500 text-3xl"></i>
+          <div>
+            <h3 class="font-semibold text-lg">Sederhana dan intuitif</h3>
+            <p class="text-sm text-gray-700 dark:text-gray-300">Dengan antarmuka sederhana kami, Anda dapat dengan mudah menavigasi unduhan video YouTube,TikTok,Instagram,Facebook,Twitter,Capcut tanpa kerumitan.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white text-center py-4 mt-10">
+    <p>© 2025 TerMultiDL. All Rights Reserved. <span class="font-semibold">By <a href="https://aetherz.xyz">AETHERzCODE</a></span></p>
+    <ul class="flex justify-center gap-4 mt-2">
+      <li><a href="/terms-of-use" class="text-blue-500 hover:underline">Terms of Use</a></li>
+      <li><a href="/copyright" class="text-blue-500 hover:underline">Copyright</a></li>
+      <li><a href="/privacy-policy" class="text-blue-500 hover:underline">Privacy Policy</a></li>
+    </ul>
+  </footer>
+</body>
+</html>
